@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>alChat · Admin</title>
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  body { overflow: auto; background: var(--bg-2); }
+  .admin-wrap { max-width: 880px; margin: 0 auto; padding: 24px 16px 60px; }
+  .admin-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .admin-title { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+  .admin-title small { display: block; font-size: 13px; font-weight: 500; color: var(--text-2); margin-top: 2px; }
+  .pill-link { color: var(--blue); text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 14px; border-radius: 999px; background: var(--bg); border: 1px solid var(--hair); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat { background: var(--bg); border: 1px solid var(--hair); border-radius: 16px; padding: 16px; animation: rise .5s var(--spring) both; }
+  .stat b { font-size: 26px; font-weight: 800; display: block; }
+  .stat span { font-size: 13px; color: var(--text-2); }
+  .card { background: var(--bg); border: 1px solid var(--hair); border-radius: 18px; padding: 18px; margin-bottom: 18px; animation: rise .5s var(--spring) both; }
+  .card h2 { font-size: 17px; margin-bottom: 14px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto auto; gap: 10px; align-items: center; }
+  .form-row .field { margin: 0; }
+  .check { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-2); white-space: nowrap; }
+  .btn-sm { padding: 11px 18px; border-radius: 12px; background: var(--blue); color: #fff; font-weight: 700; transition: transform .15s var(--spring); }
+  .btn-sm:active { transform: scale(.95); }
+  .user-row { display: flex; align-items: center; gap: 12px; padding: 12px 4px; border-bottom: 1px solid var(--hair); animation: rowIn .3s var(--spring) both; }
+  .user-row:last-child { border-bottom: none; }
+  .u-meta { flex: 1; min-width: 0; }
+  .u-name { font-weight: 600; font-size: 15px; }
+  .u-sub { font-size: 12px; color: var(--text-2); }
+  .tag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: rgba(88,86,214,.15); color: #5856D6; margin-left: 6px; }
+  .tag.online { background: rgba(52,199,89,.15); color: var(--green); }
+  .u-actions { display: flex; gap: 6px; }
+  .mini-btn { font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: var(--bg-2); transition: transform .15s var(--spring); }
+  .mini-btn:active { transform: scale(.93); }
+  .mini-btn.danger { color: var(--red); }
+  @media (max-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } .stats { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="admin-wrap">
+  <div class="admin-top">
+    <div class="admin-title">alChat Admin<small>Manage users and accounts</small></div>
+    <a class="pill-link" href="/">← Back to chat</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="stUsers">–</b><span>Total users</span></div>
+    <div class="stat"><b id="stOnline">–</b><span>Online now</span></div>
+    <div class="stat"><b id="stMsgs">–</b><span>Messages sent</span></div>
+  </div>
+
+  <div class="card">
+    <h2>Add a user</h2>
+    <form id="addForm" class="form-row" autocomplete="off">
+      <input class="field" id="newUser" placeholder="Username" required pattern="[a-zA-Z0-9._\-]{3,24}">
+      <input class="field" id="newName" placeholder="Display name (optional)">
+      <input class="field" id="newPass" placeholder="Password (min 6)" required minlength="6">
+      <label class="check"><input type="checkbox" id="newAdmin"> Admin</label>
+      <button class="btn-sm" type="submit">Add user</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Users</h2>
+    <div id="userList"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+<script src="/js/admin.js"></script>
+</body>
+</html>

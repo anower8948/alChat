@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>alChat</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2334C759'/><stop offset='1' stop-color='%2330B14F'/></linearGradient></defs><rect width='100' height='100' rx='24' fill='url(%23g)'/><path d='M50 22c-17 0-30 11-30 25 0 8 4.5 15 11.5 19.5L28 80l14.5-7c2.4.5 4.9.7 7.5.7 17 0 30-11 30-25S67 22 50 22z' fill='white'/></svg>">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- ===== Login ===== -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">💬</div>
+    <h1 class="login-title">alChat</h1>
+    <p class="login-sub">Sign in with the account your admin gave you</p>
+    <form id="loginForm" autocomplete="on">
+      <input id="loginUser" class="field" type="text" placeholder="Username" autocomplete="username" required>
+      <input id="loginPass" class="field" type="password" placeholder="Password" autocomplete="current-password" required>
+      <button class="btn-primary" type="submit">Sign in</button>
+      <div id="loginError" class="login-error" hidden></div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== App ===== -->
+<div id="app" class="app" hidden>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <header class="sidebar-head glass">
+      <div class="me">
+        <div class="avatar" id="meAvatar"></div>
+        <div class="me-name" id="meName"></div>
+      </div>
+      <div class="sidebar-actions">
+        <a id="adminLink" class="icon-btn" href="/admin" title="Admin dashboard" hidden>⚙️</a>
+        <button id="logoutBtn" class="icon-btn" title="Sign out">⏻</button>
+      </div>
+    </header>
+    <div class="search-wrap">
+      <input id="search" class="search" type="search" placeholder="Search">
+    </div>
+    <div id="contactList" class="contact-list"></div>
+  </aside>
+
+  <!-- Chat pane -->
+  <main class="chat" id="chatPane">
+    <div id="emptyState" class="empty-state">
+      <div class="empty-bubble">💬</div>
+      <p>Select a conversation to start chatting</p>
+    </div>
+
+    <div id="conversation" class="conversation" hidden>
+      <header class="chat-head glass">
+        <button id="backBtn" class="icon-btn back-btn">‹</button>
+        <div class="avatar small" id="peerAvatar"></div>
+        <div class="peer-meta">
+          <div class="peer-name" id="peerName"></div>
+          <div class="peer-status" id="peerStatus">offline</div>
+        </div>
+        <div class="chat-actions">
+          <button id="audioCallBtn" class="icon-btn" title="Audio call">📞</button>
+          <button id="videoCallBtn" class="icon-btn" title="Video call">📹</button>
+        </div>
+      </header>
+
+      <div id="messages" class="messages"></div>
+      <div id="typingRow" class="typing-row" hidden>
+        <div class="bubble them typing-bubble"><span></span><span></span><span></span></div>
+      </div>
+
+      <footer class="composer glass">
+        <button id="attachBtn" class="icon-btn" title="Send a file">＋</button>
+        <input id="fileInput" type="file" hidden>
+        <div class="input-pill">
+          <textarea id="msgInput" rows="1" placeholder="iMessage… just kidding — alChat"></textarea>
+          <button id="sendBtn" class="send-btn" title="Send" disabled>↑</button>
+        </div>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<!-- ===== Call overlay ===== -->
+<div id="callOverlay" class="call-overlay" hidden>
+  <video id="remoteVideo" class="remote-video" autoplay playsinline></video>
+  <video id="localVideo" class="local-video" autoplay playsinline muted></video>
+  <div class="call-info">
+    <div class="avatar big" id="callAvatar"></div>
+    <div class="call-name" id="callName"></div>
+    <div class="call-state" id="callState">Calling…</div>
+  </div>
+  <div class="call-controls">
+    <button id="muteBtn" class="call-btn" title="Mute">🎤</button>
+    <button id="camBtn" class="call-btn" title="Camera" hidden>📷</button>
+    <button id="acceptBtn" class="call-btn accept" title="Accept" hidden>✓</button>
+    <button id="hangupBtn" class="call-btn hangup" title="Hang up">✕</button>
+  </div>
+</div>
+
+<!-- Reaction picker -->
+<div id="reactionPicker" class="reaction-picker" hidden>
+  <button data-emoji="❤️">❤️</button>
+  <button data-emoji="👍">👍</button>
+  <button data-emoji="👎">👎</button>
+  <button data-emoji="😂">😂</button>
+  <button data-emoji="‼️">‼️</button>
+  <button data-emoji="❓">❓</button>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/sounds.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
